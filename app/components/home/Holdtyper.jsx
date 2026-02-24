@@ -1,4 +1,4 @@
-import { holdtyperData } from "../../../data/holdtyperData";
+import { holdtyperData } from "../../holdtyperData";
 
 export default function Holdtyper() {
   return (
