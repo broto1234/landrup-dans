@@ -1,13 +1,16 @@
-"use server";
+"use server"; //uses server-only features: zod, cookies(), redirect(), revalidatePath()
 
 import { z } from "zod";
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
-import { newsletterSchema } from "./lib/validations";
-import { formSchema } from "./lib/validations";
-import { loginSchema } from "./lib/validations";
-import { registerSchema } from "./lib/validations";
+import { revalidatePath } from "next/cache";
+import { newsletterSchema } from "@/lib/validations";
+import { formSchema } from "@/lib/validations";
+import { loginSchema } from "@/lib/validations";
+import { registerSchema } from "@/lib/validations";
+import { joinActivity } from "@/lib/dal";
+import { fetchUserById } from "@/lib/dal";
+import { fetchNewsletter } from "@/lib/dal";
 
 //// Newsletter Action ////
 export async function newsletterAction( prevState, formData ) {
@@ -29,21 +32,8 @@ export async function newsletterAction( prevState, formData ) {
     };
   }
 
-  const res = await fetch(`${process.env.API_URL}/api/v1/newsletter`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-  });
-
-  if (!res.ok) {
-    return {
-      values: { email },
-      errors: { form: ["Failed to send newsletter subscription"] },
-    };
-  }
-
-  const result = await res.json();
-  console.log("Server response:", result);
+  await fetchNewsletter(email);  
+  // console.log("Server response:", result);
 
   return { success: true };
   // return { success: true, values: { email }, errors: undefined };
@@ -131,8 +121,8 @@ export async function loginData( prevState, formData ) {
   console.log("Server response:", result);
 
   cookiesStore.set("accessToken", result.token);
-  const decode = jwt.decode(result.token);
-  const role = decode?.data?.role;
+  cookiesStore.set("userId", result.userId);
+  const role = result.role;
   if (role === "default") { redirect("/user") }
   redirect("/instructor");
 }
@@ -175,4 +165,49 @@ export async function registerData( prevState, formData ) {
   const role = decode?.data?.role;
   if (role === "default") { redirect("/user") }
   redirect("/instructor");
+}
+
+//-----------  Add User to Activity -----------//
+export async function addUserToActivity(activityId, isUserEnrolled) {
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get("accessToken")?.value;
+  const userId = cookiesStore.get("userId")?.value;
+
+  if (!accessToken || !userId) {
+    redirect("/login");
+  }
+
+  try {
+    await joinActivity(userId, activityId, isUserEnrolled, accessToken);
+    
+    revalidatePath(`/activities/${activityId}`);
+    
+    return { 
+      success: true, 
+      message: isUserEnrolled 
+      ?  "Successfully left activity" 
+      :  "Successfully joined activity" 
+    };
+  } catch (error) {
+    console.log("Network error:", error);
+    return {
+      success: false,
+      message: error.message || "Network error while joining activity"
+    }
+  } 
+}
+
+//---------- Get User by ID -----------////
+export async function getUserById() {
+
+  const cookiesStore = await cookies();
+  
+  if (!cookiesStore.has("userId") || !cookiesStore.has("accessToken")) {
+    redirect("/login");
+  }
+
+  const userId = cookiesStore.get("userId")?.value;
+  const accessToken = cookiesStore.get("accessToken")?.value;
+
+  return fetchUserById(userId, accessToken);
 }

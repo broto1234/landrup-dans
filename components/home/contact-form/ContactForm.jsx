@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState, useEffect } from "react";
-import { contactData } from "../../../actions";
+import { contactData } from "@/actions/actions";
 
 const initialState = {
   values: {

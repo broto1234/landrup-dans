@@ -1,4 +1,4 @@
-import LoginFrom from "../../components/LoginFrom";
+import LoginFrom from "@/components/LoginFrom";
 
 export default function LoginPage() {
   return (

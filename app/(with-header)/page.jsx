@@ -1,9 +1,9 @@
-import Hero from "../components/home/Hero";
-import Holdtyper from "../components/home/Holdtyper";
-import Nyhedsbrev from "../components/home/newsletter/Nyhedsbrev";
-import KunderSiger from "../components/home/comment/KunderSiger";
-import ContactForm from "../components/home/contact-form/ContactForm";
-import Footer from "../components/home/Footer";
+import Hero from "@/components/home/Hero";
+import Holdtyper from "@/components/home/Holdtyper";
+import Nyhedsbrev from "@/components/home/newsletter/Nyhedsbrev";
+import KunderSiger from "@/components/home/comment/KunderSiger";
+import ContactForm from "@/components/home/contact-form/ContactForm";
+import Footer from "@/components/home/Footer";
 
 export default function Home() {
   return (

@@ -1,6 +1,6 @@
 "use client";
 import { useActionState, useState, useEffect } from "react";
-import { newsletterAction } from "../../../actions";
+import { newsletterAction } from "@/actions/actions";
 
 const initialState = {
   values: {

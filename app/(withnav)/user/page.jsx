@@ -1,34 +1,21 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-import VisHold from "../../components/VisHold";
-// import { redirect } from "next/navigation";
-import ProfileCard from "../../components/instructor/ProfileInfo";
-import { th } from "zod/v4/locales";
-
+import VisHold from "@/components/VisHold";
+import ProfileCard from "@/components/instructor/ProfileInfo";
+import { getUserById } from "@/actions/actions";
 
 export default async function UserPage() {
-  const cookiesStore =  await cookies();
-  const accessToken = cookiesStore.get("accessToken")?.value;
-  if (!accessToken) {
-    redirect("/login");
-  }
-  const userId = jwt.decode(accessToken)?.data?.id;
-  // const userId = user.id;
+  // const cookiesStore =  await cookies();
+  // const accessToken = cookiesStore.get("accessToken")?.value;
+  // const userId = cookiesStore.get("userId")?.value;
+  // console.log("User ID from cookies:", userId);
+  // console.log("Access Token from cookies:", accessToken);
 
-  const res = await fetch(`${process.env.API_URL}/api/v1/users/${userId}`, {
-    headers: {
-      "Authorization": `Bearer ${accessToken}`
-    }, 
-    cache: "no-store"
-  });
+  // if (!accessToken) {
+  //   redirect("/login");
+  // }
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error("Failed to fetch user data:", text);
-    throw new Error("Failed to fetch user data");
-  }
-
-  const user = await res.json();
+  const user = await getUserById();
+  console.log("Fetched user data:", user);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -43,7 +30,7 @@ export default async function UserPage() {
                   <div>
                     <p className="text-sm"><span className="capitalize">{activity.weekday}</span> <span>kl. {activity.time}</span></p>
                   </div>
-                  <VisHold />
+                  <VisHold activityId={activity.id} />
                 </li>
               ))
             ) : (
@@ -53,34 +40,4 @@ export default async function UserPage() {
       </div>
     </div>
   );
-
-
 }
-
-
-
-
-
-
-
-// import { cookies } from "next/headers";
-// import jwt from "jsonwebtoken";
-// import { redirect } from "next/navigation";
-// import ProfileCard from "../../components/ProfileCard";
-
-// export default async function UserPage() {
-//   const cookiesStore =  await cookies();
-//   const accessToken = cookiesStore.get("accessToken")?.value;
-//   if (!accessToken) {
-//     redirect("/login");
-//   }
-//   const user = jwt.decode(accessToken).data;
-//   // const user = JSON.parse(accessToken);
-//   console.log("User from token:", user);
-
-//   return (
-//     <div className="min-h-screen bg-background text-foreground">
-//       <ProfileCard user={user} />
-//     </div>
-//   );
-// }

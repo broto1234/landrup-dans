@@ -1,4 +1,4 @@
-import NavMenu from "../components/navlink/NavMenu";
+import NavMenu from "@/components/navlink/NavMenu";
 
 export default function NoHeaderLayout({ children }) {
   return (

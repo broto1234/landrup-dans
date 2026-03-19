@@ -1,9 +1,9 @@
-import { getAllTestimonials } from "@/app/lib/dal";
+import { getAllTestimonials } from "@/lib/dal";
 import CommentCard from "./CommentCard";
 
-export default async function KunderSiger () {
+export default async function KunderSiger() {
   const testimonials = await getAllTestimonials();
-  // console.log("Testimonials in component:", testimonials);
+  console.log("Testimonials in component:", testimonials);
 
   return (
     <section className="bg-blue-950">

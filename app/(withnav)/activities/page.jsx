@@ -1,18 +1,27 @@
-import { getAllActivities } from "../../lib/dal";
-import ActivitiesCard from "../../components/activityCards/ActvsCard";
+import { getAllActivities } from "@/lib/dal";
+import SearchHeader from "@/components/activityCards/SearchHeader";
+import ActivitiesCard from "@/components/activityCards/ActvsCard";
 
-export default async function Activities() {
+export default async function Activities( { searchParams }) {
+
+  const { query } = await searchParams;
+  
   const activities = await getAllActivities();
   console.log("Activities data:", activities);
 
+  const filteredActivities = query ?
+    activities.filter(activity => {      
+      const nameSearch = activity.name.toLowerCase().includes(query.toLowerCase());
+      const weekdaySearch = activity.weekday.toLowerCase().includes(query.toLowerCase());
+      return nameSearch || weekdaySearch;
+    })
+  : 
+    activities;
+
   return (
     <main className="min-h-screen mt-6 px-3">
-      <ActivitiesCard activities={activities} />
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2">
-        {activities.map((activity) => (
-         <ActivitiesCard key={activity.id} activity={activity} />
-        ))}
-      </div> */}
+      <SearchHeader />
+      <ActivitiesCard filteredActivities={filteredActivities} />
     </main>
   );  
 }

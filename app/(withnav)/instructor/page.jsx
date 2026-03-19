@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
-import { getAllActivities } from "../../lib/dal";
-import InstructorActivities from "../../components/instructor/InstructorActivities";
-import ProfileInfo from "../../components/instructor/ProfileInfo";
+import { getAllActivities } from "@/lib/dal";
+import { getUserById } from "@/actions/actions";
+import InstructorActivities from "@/components/instructor/InstructorActivities";
+import ProfileInfo from "@/components/instructor/ProfileInfo";
 
 export default async function InstructorPage() {
   const cookiesStore =  await cookies();
@@ -11,7 +11,7 @@ export default async function InstructorPage() {
   if (!accessToken) {
     redirect("/login");
   }
-  const user = jwt.decode(accessToken).data;
+  const user = await getUserById();
   // const user = JSON.parse(accessToken);
   console.log("User from token:", user);
 
