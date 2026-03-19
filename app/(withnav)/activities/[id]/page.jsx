@@ -18,7 +18,7 @@ export default async function ActivityPage({ params }) {
   let user = null;
 
   if (token) {
-    const res = await fetch(`http://localhost:4000/api/v1/users/${userId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: 0 }, // Ensure we get fresh data on each request
     });

@@ -18,10 +18,10 @@ export async function newsletterAction( prevState, formData ) {
 
   console.log("prevState...:", prevState);
 
-  // if ( prevState?.values && 
-  //       email === prevState.values.email ) {
-  //   return prevState;
-  // }
+  if ( prevState?.values && 
+        email === prevState.values.email ) {
+    return prevState;
+  }
 
   const emailParse = newsletterSchema.safeParse({ email });
   
@@ -47,12 +47,12 @@ export async function contactData( prevState, formData ) {
 
   console.log("prevState...:", prevState);
 
-  // if ( prevState?.values && 
-  //       name === prevState.values.name && 
-  //       email === prevState.values.email && 
-  //       message === prevState.values.message) {
-  //   return prevState;
-  // }
+  if ( prevState?.values && 
+        name === prevState.values.name && 
+        email === prevState.values.email && 
+        message === prevState.values.message) {
+    return prevState;
+  }
 
   const validationResult = formSchema.safeParse({ name, email, message });
   
