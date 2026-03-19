@@ -63,7 +63,7 @@ export async function contactData( prevState, formData ) {
     };
   }
 
-  const res = await fetch(`${process.env.API_URL}/api/v1/messages`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/messages`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, message }),
@@ -148,7 +148,7 @@ export async function registerData( prevState, formData ) {
       errors: z.flattenError(validationResult.error).fieldErrors,
     };
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/users`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ firstname, lastname, username, age:validationResult.data.age, password, role: "default" }),
