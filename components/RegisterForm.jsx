@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useEffect } from "react";
 import Link from "next/link";
-import { registerData } from "../actions";
+import { registerData } from "../actions/actions";
 import { fi } from "zod/v4/locales";
 
 const initialState = {
