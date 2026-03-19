@@ -1,6 +1,6 @@
 import { FaUser } from "react-icons/fa6";
-import { getSingleActivity } from "../../../lib/dal";
-import ProfileInfo from "../../../components/instructor/ProfileInfo";
+import { getSingleActivity } from "../../../../lib/dal";
+import ProfileInfo from "@/components/instructor/ProfileInfo";
 
 export default async function instructorDetail({ params }) {
   const { id } = await params;
