@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ActivitiesFiltered({ activities }) {
-  // console.log("ActivitiesFiltered received filtered activities:", filtered);
+  console.log("ActivitiesFiltered received activities:", activities);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pb-2">
           {activities.length ? (

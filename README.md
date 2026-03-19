@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+In vercel: [https://landrup-dans-five.vercel.app/](https://landrup-dans-five.vercel.app/)
+
+Api: [https://landrup-api-hlp6.onrender.com/](https://landrup-api-hlp6.onrender.com/)
 
 ## Getting Started
 

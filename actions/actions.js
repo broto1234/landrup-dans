@@ -89,11 +89,11 @@ export async function loginData( prevState, formData ) {
   const password = formData.get("password");
   console.log("prevState...:", prevState);
 
-  // if ( prevState?.values && 
-  //       username === prevState.values.username && 
-  //       password === prevState.values.password) {
-  //   return prevState;
-  // }
+  if ( prevState?.values && 
+        username === prevState.values.username && 
+        password === prevState.values.password) {
+    return prevState;
+  }
 
   const validationResult = loginSchema.safeParse({ username, password });
   

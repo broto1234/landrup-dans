@@ -34,7 +34,7 @@ export default function ActivityDetails({ user, token, activity }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/users/${user.id}/activities/${activity.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${user.id}/activities/${activity.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export default function ActivityDetails({ user, token, activity }) {
 
   const handleLeave = async () => {
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/users/${user.id}/activities/${activity.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${user.id}/activities/${activity.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
