@@ -9,7 +9,7 @@ export default function NavLink({ href, children }) {
   (href === "/instructor" && pathname.startsWith("/instructor/"));
   
   return (
-    <Link href={href} className={isActive ? "text-background" : "text-background/50"}>
+    <Link href={href} className={isActive ? "text-bgColor" : "text-bgColor/30"}>
       {children}
     </Link>
   );

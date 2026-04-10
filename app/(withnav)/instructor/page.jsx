@@ -1,29 +1,23 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getAllActivities } from "@/lib/dal";
-import { getUserById } from "@/actions/actions";
-import InstructorActivities from "@/components/instructor/InstructorActivities";
-import ProfileInfo from "@/components/instructor/ProfileInfo";
+import { requireTokens } from "@/lib/auth";
+import { userById } from "@/services/users/userById-service";
+import { allActivities } from "@/services/activities/allActivities-service";
+import ProfileInfo from "@/components/profile-card/ProfileInfo";
+import InstructorCard from "@/components/instructor/InstructorCard";
 
 export default async function InstructorPage() {
-  const cookiesStore =  await cookies();
-  const accessToken = cookiesStore.get("accessToken")?.value;
-  if (!accessToken) {
-    redirect("/login");
-  }
-  const user = await getUserById();
-  // const user = JSON.parse(accessToken);
-  console.log("User from token:", user);
+  const { token, userId } = await requireTokens();
+  const user = await userById(userId, token);  
 
-  const activities = await getAllActivities();
-  console.log("Activities data:", activities);
+  const activities = await allActivities();
 
-  const InstructorFilteredActivities = activities.filter(activity => activity.instructorId === Number(user.id));
-
+  const InstructorFilteredActivities = activities.filter(
+    activity => activity.instructorId === Number(user.id)
+  );
+  
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-bbColor text-foreground">
       <ProfileInfo user={user} />
-      <InstructorActivities activities={InstructorFilteredActivities} />
+      <InstructorCard activities={InstructorFilteredActivities}/>
     </div>
   );
 }

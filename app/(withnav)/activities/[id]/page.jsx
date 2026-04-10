@@ -1,65 +1,28 @@
-// app/activities/[id]/page.jsx
-import ActivityDetails from '@/components/detailpage/ActivityDetail';
-import { getSingleActivity } from '@/lib/dal';
-import { cookies } from 'next/headers';
+import { getTokens } from '@/lib/auth';
+import { activityById } from '@/services/activities/activityById-service';
+import { userById } from '@/services/users/userById-service';
+import ActivityDetail from '@/components/detail-page/ActivityDetail';
 
 export default async function ActivityPage({ params }) {
-  // ✅ unwrap params if it's a Promise
-  const resolvedParams = await params; 
-  const { id } = resolvedParams;
+  
+  const { id } =  await params;
 
-  // ✅ get cookies properly
-  const cookieStore = await cookies(); // cookies() is synchronous in the latest Next.js 16 server component API
-  const token = cookieStore.get('accessToken')?.value; 
-  const userId = cookieStore.get('userId')?.value;
-  console.log("Token from cookies:", token);
-  console.log("User ID from cookies:", userId);
+  const activity = await activityById(id);
+  
+  const {token, userId} = await getTokens();
 
   let user = null;
 
-  if (token) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 0 }, // Ensure we get fresh data on each request
-    });
-    if (res.ok) user = await res.json();
+  if (token && userId) {
+    try {
+      const data = await userById(userId, token);
+      if (data?.role === "default") {
+        user = data;
+      }
+    } catch (err) {
+      user = null;
+    }
   }
 
-  let activity = null;
-
-  try {
-    activity = await getSingleActivity(id);
-  } catch (err) {
-    return (
-      <div className="text-center text-red-600 mt-20">
-        Failed to load activity: {err.message}
-      </div>
-    );
-  }
-
-  return <ActivityDetails user={user} token={token} activity={activity} />;
-}
-
-// import ActvCard from "@/components/activityCards/ActvCard";
-// import { getSingleActivity } from "@/lib/dal";
-// import { getUserById } from "@/actions/actions";
-
-
-// export default async function ActivityPage({ params }) {
-
-//   const { id } = await params;
-//   const activityId = await getSingleActivity(id);
-//   const user = await getUserById();
-//   // console.log("Activity data:", activityId);
-//   console.log("User data:", user);
-
-//   const isUserEnrolled = user.activities?.some(activity => activity.id === Number(id));
-
-//   // console.log("Is user enrolled in this activity?", isUserEnrolled);
-
-//   return (
-//     <main className="min-h-screen">
-//       <ActvCard user={user} activity={activityId} isUserEnrolled={isUserEnrolled} />
-//     </main>
-//   );
-// }
+  return <ActivityDetail activity={activity} user={user} token={token} />
+};

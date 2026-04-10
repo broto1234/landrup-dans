@@ -1,18 +1,18 @@
 import Hero from "@/components/home/Hero";
-import Holdtyper from "@/components/home/Holdtyper";
-import Nyhedsbrev from "@/components/home/newsletter/Nyhedsbrev";
-import KunderSiger from "@/components/home/comment/KunderSiger";
-import ContactForm from "@/components/home/contact-form/ContactForm";
+import HomeData from "@/components/home/HomeData";
+import NewsLetterForm from "@/components/forms/newsletter/NewsLetterForm";
+import ContactForm from "@/components/forms/contact-form/ContactForm";
 import Footer from "@/components/home/Footer";
+import Testimonial from "../../components/home/comment/Testimonial";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans bg-background text-foreground">
+    <div className="flex min-h-screen items-center justify-center font-sans bg-bgColor text-foreground">
       <main className="flex flex-col pb-8">
         <Hero />  
-        <Holdtyper />    
-        <Nyhedsbrev />  
-        <KunderSiger />
+        <HomeData />    
+        <NewsLetterForm />  
+        <Testimonial />
         <ContactForm />
         <Footer />
       </main>

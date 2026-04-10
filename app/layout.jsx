@@ -10,7 +10,7 @@ const ubuntu = Ubuntu({
 
 export const metadata = {
   title: "Landrup Dans",
-  description: "Landrup Dans – en web app til en danseskole",
+  description: "Landrup Dans – a dance school in Aarhus, Denmark, offering a variety of dance classes for all ages and skill levels. Join us to experience the joy of dance and connect with a vibrant community of dancers.",
 };
 
 export default function RootLayout({ children }) {

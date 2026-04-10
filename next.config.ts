@@ -2,17 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '4000',
-        pathname: '/file-bucket/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '**',
+        protocol: "https",
+        hostname: "landrup-api-h4b5.onrender.com",
+        pathname: "/file-bucket/**",
       },
     ],
   },

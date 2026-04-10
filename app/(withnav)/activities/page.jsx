@@ -1,13 +1,14 @@
-import { getAllActivities } from "@/lib/dal";
+import { allActivities } from "@/services/activities/allActivities-service";
+// import { activitiesDal } from "@/lib/dal/activities-dal";
+
 import SearchHeader from "@/components/activityCards/SearchHeader";
-import ActivitiesCard from "@/components/activityCards/ActvsCard";
+import ActivitiesCard from "@/components/activityCards/ActivitiesCard";
 
 export default async function Activities( { searchParams }) {
-
+  
   const { query } = await searchParams;
   
-  const activities = await getAllActivities();
-  console.log("Activities data:", activities);
+  const activities = await allActivities();
 
   const filteredActivities = query ?
     activities.filter(activity => {      
@@ -15,8 +16,8 @@ export default async function Activities( { searchParams }) {
       const weekdaySearch = activity.weekday.toLowerCase().includes(query.toLowerCase());
       return nameSearch || weekdaySearch;
     })
-  : 
-    activities;
+   : 
+  activities;
 
   return (
     <main className="min-h-screen mt-6 px-3">

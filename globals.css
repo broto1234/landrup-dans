@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #003147;
+  --bgColor: #003147;
   --foreground: #E9E9E9;
   --activeColor: #6F6F6F;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-bgColor: var(--bgColor);
   --color-foreground: var(--foreground);
   --color-active: var(--activeColor);
   /* --font-sans: var(--font-ubuntu-sans); */
 }
 
 body {
-  background: var(--background);
+  background: var(--bgColor);
   color: var(--foreground);
   font-family: Ubuntu,Arial, Helvetica, sans-serif;
 }

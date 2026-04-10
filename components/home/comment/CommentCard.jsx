@@ -18,7 +18,7 @@ export default function CommentCard( {testimonials} ) {
 
   return (
     <section className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl text-center mb-6">Det siger vores <br /> kunder om os</h2>
+        <h2 className="text-2xl text-center mb-6">What our <br /> customers say about us</h2>
         <div className="text-center">
           <div className="flex flex-col justify-between mb-4 h-20 space-y-2">
             <p className="text-xs italic">{currentTestimonial.content}</p>
