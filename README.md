@@ -4,7 +4,7 @@ A modern full-stack dance activity management application built with **Next.js**
 
 ## Live Demo
 
-- Frontend: (add your Vercel link)
+- Frontend: (https://landrup-dans-omega.vercel.app/)
 - API: (https://landrup-api-h4b5.onrender.com)
 
 ## Tech Stack
